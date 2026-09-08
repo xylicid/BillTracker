@@ -61,12 +61,14 @@ class BillerRepository(
                     date = advance(date, Recurrence.MONTHLY)
                 }
             }
-            if (date != null && bill.isPaid && date.isBefore(today) && recurrenceOf(bill) != Recurrence.NONE) {
-                var next = date
+            val resolvedDate = date ?: continue
+
+            if (bill.isPaid && resolvedDate.isBefore(today) && recurrenceOf(bill) != Recurrence.NONE) {
+                var next = resolvedDate
                 do { next = advance(next, recurrenceOf(bill)) } while (next.isBefore(today))
                 dao.update(bill.copy(dueDate = next.format(formatter), isPaid = false, paidAt = null, dueDay = next.dayOfMonth))
-            } else if (date != null && bill.dueDate != date.format(formatter)) {
-                dao.update(bill.copy(dueDate = date.format(formatter), dueDay = date.dayOfMonth))
+            } else if (bill.dueDate != resolvedDate.format(formatter)) {
+                dao.update(bill.copy(dueDate = resolvedDate.format(formatter), dueDay = resolvedDate.dayOfMonth))
             }
         }
     }
