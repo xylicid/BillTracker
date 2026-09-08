@@ -1,3 +1,4 @@
+@file:OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 package com.example.billtracker.ui
 
 import androidx.compose.animation.core.LinearEasing
