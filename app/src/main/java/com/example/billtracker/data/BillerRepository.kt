@@ -2,6 +2,7 @@ package com.example.billtracker.data
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -52,7 +53,7 @@ class BillerRepository(
     /** Convert old v2 dueDay values to a real date and advance completed recurring occurrences. */
     suspend fun normalizeDates() {
         val today = LocalDate.now()
-        billers.first().forEach { bill ->
+        for (bill in billers.first()) {
             var date = parseDate(bill.dueDate)
             if (date == null && bill.dueDay != null) {
                 date = safeDate(today.year, today.monthValue, bill.dueDay)

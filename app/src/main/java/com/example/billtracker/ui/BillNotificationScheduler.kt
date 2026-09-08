@@ -83,7 +83,7 @@ class BillNotificationReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.mipmap.ic_launcher_foreground)
             .setContentTitle("$name is due tomorrow")
             .setContentText("$name$amountText is due $due. Tap to open Bill Tracker.")
             .setStyle(NotificationCompat.BigTextStyle().bigText("$name$amountText is due tomorrow ($due)."))
